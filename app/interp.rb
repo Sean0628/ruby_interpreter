@@ -12,6 +12,12 @@ def evaluate(tree, env)
     evaluate(tree[1], env) * evaluate(tree[2], env)
   when '/'
     evaluate(tree[1], env) / evaluate(tree[2], env)
+  when '=='
+    evaluate(tree[1], env) == evaluate(tree[2], env)
+  when '<'
+    evaluate(tree[1], env) < evaluate(tree[2], env)
+  when '>'
+    evaluate(tree[1], env) > evaluate(tree[2], env)
   when 'func_call'
     p evaluate(tree[2], env)
   when 'stmts'
@@ -26,6 +32,12 @@ def evaluate(tree, env)
     env[tree[1]] = evaluate(tree[2], env)
   when 'var_ref'
     env[tree[1]]
+  when 'if'
+    if evaluate(tree[1], env)
+      evaluate(tree[2], env)
+    else
+      evaluate(tree[3], env)
+    end
   end
 end
 
