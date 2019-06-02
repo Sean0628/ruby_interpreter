@@ -1,4 +1,3 @@
-
 class Interp
   def self.evaluate(tree, genv, lenv)
     case tree[0]
@@ -25,7 +24,17 @@ class Interp
     when '>='
       evaluate(tree[1], genv, lenv) >= evaluate(tree[2], genv, lenv)
     when 'func_call'
-      p evaluate(tree[2], genv, lenv)
+      args = []
+      i = 0
+      while tree[i + 2]
+        args[i] = evaluate(tree[i + 2], genv, lenv)
+        i = i + 1
+      end
+      mhd = genv[tree[1]]
+      if mhd[0] == 'builtin'
+        minruby_call(mhd[1], args)
+      else
+      end
     when 'stmts'
       i = 1
       last = nil
